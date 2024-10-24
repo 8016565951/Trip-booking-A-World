@@ -1,0 +1,99 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Edit Services</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <form
+                action="<%= generateDashUrl('products.single.update.http', { id: product._id }) %>"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+                <div class="form-group mb-3">
+                    <label for="name">Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        value="<%= product.name %>"
+                        required
+                    />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="price">Price</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        class="form-control"
+                        id="price"
+                        name="price"
+                        value="<%= product.price %>"
+                        min="0"
+                        required
+                    />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="duration">duration</label>
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="duration"
+                        name="duration"
+                        value="<%= product.duration %>"
+                        min="0"
+                        required
+                    />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="travelers">Travers Agency</label>
+                    <input type="text" class="form-control" id="travelers" name="travelers" value="<%= product.travelers %>" required />
+                </div>
+
+                <div class="form-group mb-3">   
+                    <label for="contactNumber">Contact Number</label>
+                    <input type="text" class="form-control" id="contactNumber" name="contactNumber" value="<%= product.contactNumber %>" required />
+                </div>
+
+               
+
+                <div class="form-group mb-3">
+                    <label for="category">Destination</label>
+                    <select
+                        class="form-control"
+                        id="category"
+                        name="categoryId"
+                        required
+                    >
+                        <% categories.forEach(category => { %>
+                            <option value="<%= category.id %>" <%= category.id === product.categoryId.toString() ? 'selected' : '' %>><%= category.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="productImage">Service Image :</label>
+                    <input
+                        type="file"
+                        class="form-control"
+                        id="productImage"
+                        name="productImage"
+                        value="/<%= product.productImage %>"
+                      
+                    />
+                    <% if (product.productImage) { %>
+                    <img src="/<%= product.productImage %>" alt="Product Image" class="img-thumbnail img-fluid mt-3" />
+                    <% } %>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

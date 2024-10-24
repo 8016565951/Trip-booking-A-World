@@ -1,0 +1,26 @@
+<% layout(dirs.layouts + '/layout') -%>
+<div class="container mt-5">
+    <h1 class="text-center">ALL Contacts</h1>
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% contacts.forEach(contact => { %>
+                    <tr>
+                        <td><%= contact.name %></td>
+                        <td><%= contact.email %></td>
+                        <td><%= contact.phone %></td>
+                        <td><%= contact.message %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+</div>
+

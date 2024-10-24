@@ -1,0 +1,87 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+<div class="banner_section " >
+  
+    <div class="container my-5">
+        <section style="height: 100px; text-align: center; background-color: #1c1c1e; color: #fafafa; margin-top: 50px;">
+            <h1 style="color: #f6fcaa;">MY BOOKINGS</h1>
+        </section>
+        <hr style="background-color: #616005; height: 2px;">
+    
+        <!-- Check if there are bookings -->
+        <% if (bookings.length > 0) { %>
+            <div style="width: 100%; background-color: #ffffff; border-collapse: collapse; border-radius: 4px; color: #0070f3;">
+                <table style="width: 100%; border-collapse: collapse;" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;">Booking ID</th>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;" class="text-center">Service</th>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;">User</th>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;">Date</th>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;">Travelers Agency</th>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;">Duration</th>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;">Status</th>
+                            <th style="padding: 12px; text-align: left; background-color: #fac4c4; color: #000000; border-bottom: 1px solid #3a3a3c;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% bookings.forEach(booking => { %>
+                            <tr>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;"><%= booking.bookingId %></td>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;">
+                                    <img src="/<%= booking.serviceId ? booking.serviceId.productImage : '' %>" 
+                                         style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px; border-radius: 50%;" 
+                                         alt="Product Image">
+                                    <b><%= booking.serviceId ? booking.serviceId.name : 'Service Not Available' %></b>
+                                </td>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;"><%= booking.userId ? booking.userId.username : 'User Not Available' %></td>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;"><%= new Date(booking.date).toLocaleDateString() %></td>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;"><%= booking.serviceId ? booking.serviceId.travelers : 'Travelers Not Available' %></td>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;"><%= booking.serviceId ? booking.serviceId.duration : 'Duration Not Available' %> Days</td>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;">
+                                    <span style="background-color: #ffeb3b; padding: 3px 8px; border-radius: 4px; color: #333; font-size: 12px;"><%= booking.status %></span>
+                                </td>
+                                <td style="padding: 12px; background-color: #ffffff; color: #000000; border-bottom: 1px solid #3a3a3c;">
+                                    <a href="booking/details/<%= booking._id %>" style="padding: 6px 12px; background-color: #0070f3; color: #fff; border-radius: 4px; text-decoration: none;" onclick="showNotification('Viewing Booking: <%= booking.bookingId %>')">View</a>
+                                   
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <div style="padding: 15px; background-color: #2196F3; color: white; margin-bottom: 20px; border-radius: 4px;">
+                No bookings found.
+            </div>
+            <script>
+                showNotification('No bookings found', 'info');
+            </script>
+        <% } %>
+
+       
+    </div>
+</div>
+
+<script>
+    function showNotification(message, type = 'success') {
+        VercelNotification.notify({
+            title: 'Booking Notification',
+            message: message,
+            type: type // success, info, error
+        });
+    }
+
+    function handleDelete(bookingId, bookingRef) {
+        if (confirm('Are you sure you want to delete booking ' + bookingRef + '?')) {
+            fetch('/booking/' + bookingId + '/delete', { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        showNotification('Booking ' + bookingRef + ' deleted successfully', 'success');
+                        location.reload(); // Refresh the page
+                    } else {
+                        showNotification('Failed to delete booking', 'error');
+                    }
+                });
+        }
+    }
+</script>

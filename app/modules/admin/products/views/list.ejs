@@ -1,0 +1,61 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Services</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-end mb-3">
+                <a href="<%= generateDashUrl('products.single.create.ui') %>" class="btn btn-primary">Add Service</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Service Image</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price (USD)</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Duration(Days)</th>
+                        <th scope="col">Contact Number</th>
+                        <th>Travelers Agency</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(product => { %>
+                        <tr>
+                            <td><img src="/<%= product.productImage %>" alt="" width="100"></td>
+                            <th scope="row"><%= product.id %></th>
+                            <td><%= product.name %></td>
+                            <td><%= new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price) %></td>
+                            <td><%= product.category.name %></td>
+                            <td><%= product.duration %></td>
+                            <td><%= product.contactNumber %></td>
+                            <td><%= product.travelers %></td>
+                            <td>
+                                <a href="<%= generateDashUrl('products.single.update.ui', { id: product.id }) %>" class="btn btn-warning ">Edit</a>
+                                <a href="<%= generateDashUrl('products.single.delete.http', { id: product.id }) %>" class="btn btn-danger ">Delete</a>
+                                
+                                    <form action="/dashboard/products/<%= product.id %>/activate" method="POST">
+                                        <button type="submit" class="btn btn-primary"><%if(product.isActive===true){%>
+                                            Deactivate
+                                            <%}else{%>
+                                            Activate<%}%></button>
+                                      </form>
+                               
+                            </td>
+                                
+                              
+                            
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

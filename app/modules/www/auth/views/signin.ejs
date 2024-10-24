@@ -1,0 +1,102 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+<!-- contact section start -->
+
+<div class="banner_section" >
+   
+  
+    <div class="container mt-5">
+        <section
+            class="h-100 h-custom gradient-custom-2 container"
+            style="display: flex; justify-content: center; align-items: center"
+        >
+            <div
+                class="container py-5 h-100 login"
+                style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                "
+            >
+                <div
+                    class="row d-flex justify-content-center align-items-center h-100"
+                    style="width: 500px"
+                >
+                    <div
+                        class="card card-registration card-registration-2"
+                        style="border-radius: 15px"
+                    >
+                        <form
+                            action="<%= generateUrl('auth.signin.http') %>"
+                            method="POST"
+                        >
+                            <div class="card-body p-0">
+                                <div class="p-5">
+                                    <h3 class="text-center">
+                                        <!-- user icon -->
+                                       <i class="fas fa-user"></i> Login
+                                        <hr />
+                                    </h3>
+
+                                    <div class="pb-2">
+                                        <div
+                                            data-mdb-input-init
+                                            class="form-outline form-white"
+                                        >
+                                            <label
+                                                class="form-label"
+                                                for="email"
+                                                >Your Email</label
+                                            >
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                class="form-control"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="pb-2">
+                                        <div
+                                            data-mdb-input-init
+                                            class="form-outline"
+                                        >
+                                            <label
+                                                class="form-label"
+                                                for="password"
+                                                >Your password</label
+                                            >
+                                            <input
+                                                type="password"
+                                                id="password"
+                                                name="password"
+                                                class="form-control"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p>
+                                            Don't have an account?
+                                            <a
+                                                href="<%= generateUrl('auth.signup.ui') %>"
+                                                >Sign Up</a
+                                            >
+                                        </p>
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                        >
+                                            Login
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

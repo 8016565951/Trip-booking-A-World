@@ -1,0 +1,123 @@
+<div class="header_section">
+    <div class="header_main">
+        <div class="mobile_menu">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="logo_mobile">
+                    <a href="<%= generateUrl('www.list.home') %>">
+                        <img src="/images/logo.png" />
+                    </a>
+                </div>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= generateUrl('www.list.home') %>">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= generateUrl('www.about.ui') %>">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= generateUrl('www.service.ui') %>">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= generateUrl('www.blog.ui') %>">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= generateUrl('www.contact.ui') %>">Contact</a>
+                        </li>
+                       
+                </div>
+            </nav>
+        </div>
+        <div class="container-fluid">
+            <div class="logo">
+                <a href="<%= generateUrl('www.list.home') %>">
+                    <img src="/images/logo.png" />
+                </a>
+            </div>
+            <div class="menu_main">
+                <ul>
+                    <li class="active">
+                        <a href="<%= generateUrl('www.list.home') %>">Home</a>
+                    </li>
+                    <li>
+                        <a href="<%= generateUrl('www.about.ui') %>">About</a>
+                    </li>
+                    <li>
+                        <a href="<%= generateUrl('www.service.ui') %>">Services</a>
+                    </li>
+                    <li>
+                        <a href="<%= generateUrl('www.blog.ui') %>">Blog</a>
+                    </li>
+                    <li>
+                        <a href="<%= generateUrl('www.contact.ui') %>">Contact us</a>
+                    </li>
+                    <% if (User) { %>
+                        <li class="nav-item vercel-dropdown" style="position: relative">
+                            <a class="nav-link vercel-dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="dialog" aria-expanded="false" style="cursor: pointer; text-decoration: none; padding: 5px;">
+                                <img src="/<%= User.avatarUrl %>" alt="User" class="rounded-circle me-2" style="border-radius: 50%; object-fit: cover; width: 30px; height: 30px;" />
+                                <span style="font-weight: 500; font-size: 16px; margin-right: 5px;"><%=User.username %></span>
+                                <i class="fas fa-chevron-down arrow-icon" style="transition: transform 0.3s ease;"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="display: none; position: absolute; right: 0; background-color: rgb(255, 255, 255); border-radius: 8px; box-shadow: 0 4px 8px rgba(243, 224, 122, 0.43); list-style: none; padding: 10px 0;">
+                                <li>
+                                    <a class="dropdown-item" href="<%= generateUrl('www.profile.ui') %>" style="color: #000000; text-decoration: none;">
+                                        <i class="fas fa-user"></i> Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<%= generateUrl('www.booking.ui.list') %>" style="color: #000000; text-decoration: none;">
+                                        <i class="fas fa-shopping-cart"></i> Booking
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<%= generateUrl('auth.signout.http') %>" style="color: #000000; text-decoration: none;">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a href="<%= generateUrl('auth.signin.ui') %>" style="font-weight: 500; font-size: 16px;">Login</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Toggle dropdown visibility on click
+    document.getElementById("profileDropdown").addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation(); // Prevents the document click event from closing the dropdown
+        const dropdownMenu = this.nextElementSibling;
+        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+
+        // Toggle the arrow icon rotation
+        const arrowIcon = this.querySelector(".arrow-icon");
+        arrowIcon.style.transform = dropdownMenu.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)";
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener("click", function (e) {
+        const profileDropdown = document.getElementById("profileDropdown");
+        const dropdownMenu = profileDropdown.nextElementSibling;
+        if (!profileDropdown.contains(e.target) && dropdownMenu.style.display === "block") {
+            dropdownMenu.style.display = "none";
+            profileDropdown.querySelector(".arrow-icon").style.transform = "rotate(0deg)";
+        }
+    });
+</script>

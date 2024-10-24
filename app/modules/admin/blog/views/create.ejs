@@ -1,0 +1,55 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">create Blogs</h1>
+
+    <form
+        action="<%= generateDashUrl('blog.single.create.http') %>"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+        <div class="mb-3">
+            <label for="title" class="form-label">Blog Title</label>
+            <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                placeholder="Enter blog title"
+                required
+            />
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Blog Content</label>
+            <textarea
+                class="form-control"
+                id="content"
+                name="content"
+                rows="6"
+                placeholder="Write your blog content here"
+                required
+            ></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="blogImage" class="form-label"
+                >Upload Blog Image (Optional)</label
+            >
+            <input
+                type="file"
+                class="form-control"
+                id="blogImage"
+                name="blogImage"
+                accept="image/*"
+            />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Blog</button>
+        <a
+            href="<%= generateDashUrl('blog.list.ui') %>"
+            class="btn btn-secondary"
+            >Cancel</a
+        >
+    </form>
+</div>

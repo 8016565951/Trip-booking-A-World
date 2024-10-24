@@ -1,0 +1,55 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h2 class="text-center">Booking List</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Thumbnail</th>
+
+                <th>Service</th>
+                <th>Price</th>
+              <th>Destination</th>
+
+                <th>User</th>
+                <th>Traveler Agent <br> Phone:0000000000</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% bookings.forEach(booking=> { %>
+            <tr>
+                <td><%= booking.bookingId %></td>
+                <td><img src="/<%= booking.serviceDetails.productImage %>" alt="Thumbnail" width="100"></td>
+                <td><%= booking.serviceDetails.name %></td>
+                <td>$<%= booking.serviceDetails.price %></td>
+                <td><%= booking.serviceDetails.categoryId %></td>
+             
+                
+                <td><%= booking.userDetails.username %></td>
+                <td><%= booking.serviceDetails.travelers %> <br> Ph: <%= booking.serviceDetails.contactNumber %></td>
+                
+                <td><%= booking.date.toISOString().split('T')[0] %></td> <!-- Format date if needed -->
+                <td>
+                    <form action="<%= generateDashUrl('booking.single.update.http', { id: booking._id }) %>" method="post">
+                        <input type="hidden" name="bookingId" value="<%= booking._id %>">
+                        <select name="status" class="form-select">
+                            <option value="pending" <%= booking.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                            <option value="onprogress" <%= booking.status === 'onprogress' ? 'selected' : '' %>>On Progress</option>
+                            <option value="completed" <%= booking.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                            <option value="cancel" <%= booking.status === 'cancel' ? 'selected' : '' %>>Cancel</option>
+                        </select>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Update Status</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>

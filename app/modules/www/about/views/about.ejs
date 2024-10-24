@@ -1,0 +1,83 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+
+<div class="banner_section ">
+
+<div class="container" >
+    <!-- About Us Header Section -->
+   
+    <div class="container mt-5">
+       
+     
+    <% if(about) { -%>
+    <!-- About Card Section -->
+    <div class="about_section d-flex justify-content-center mt-5">
+        <div class="card" style="max-width: 900px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 12px;">
+            <div class="row no-gutters" id="about-content">
+                <!-- Image Section -->
+                <div class="col-md-5" id="about-image">
+                    <img 
+                        src="/<%= about.aboutimage %>" 
+                        class="card-img img-fluid rounded-left" 
+                        alt="About Us Image" 
+                        style="height: 100%; object-fit: cover;"
+                    />
+                </div>
+
+                <!-- Text Section -->
+                <div class="col-md-7" id="about-text">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h2 class="card-title" style="color: #333;"><%= about.title %></h2>
+                        <hr style="background-color: #616005; height: 2px; width: 50px;">
+                        <p class="card-text" style="color: #555;">
+                            <span id="short-description"><%= about.description.substring(0, 200) %>...</span>
+                            <span id="full-description" style="display: none;"><%= about.description %></span>
+                        </p>
+                        <a href="javascript:void(0)" id="read-more-btn" class="btn btn-link p-0" style="color: #007bff;">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } -%>
+</div>
+</div>
+
+<script>
+    // JavaScript to toggle "Read More" functionality
+    document.getElementById('read-more-btn').addEventListener('click', function() {
+        var shortDescription = document.getElementById('short-description');
+        var fullDescription = document.getElementById('full-description');
+        var readMoreBtn = document.getElementById('read-more-btn');
+        var aboutContent = document.getElementById('about-content');
+        var aboutImage = document.getElementById('about-image');
+        var aboutText = document.getElementById('about-text');
+
+        if (fullDescription.style.display === 'none') {
+            // Show the full description and hide the shortened version
+            fullDescription.style.display = 'inline';
+            shortDescription.style.display = 'none';
+            readMoreBtn.innerText = 'Read Less';
+            
+            // Change the layout to column
+            aboutContent.classList.add('flex-column');
+            aboutContent.classList.remove('row');
+            aboutImage.classList.remove('col-md-5');
+            aboutText.classList.remove('col-md-7');
+            aboutImage.classList.add('col-12');
+            aboutText.classList.add('col-12');
+        } else {
+            // Revert to the shortened version
+            fullDescription.style.display = 'none';
+            shortDescription.style.display = 'inline';
+            readMoreBtn.innerText = 'Read More';
+
+            // Change the layout back to row
+            aboutContent.classList.remove('flex-column');
+            aboutContent.classList.add('row');
+            aboutImage.classList.add('col-md-5');
+            aboutText.classList.add('col-md-7');
+            aboutImage.classList.remove('col-12');
+            aboutText.classList.remove('col-12');
+        }
+    });
+</script>

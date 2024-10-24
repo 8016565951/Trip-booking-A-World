@@ -1,0 +1,122 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+<!-- single blog section start -->
+<div class="banner_section" >
+    
+    <div class="container mt-5">
+        <section style="height: 100px; text-align: center; background-color: #1c1c1e; color: #fafafa; margin-top: 50px;">
+            <h1 style="color: #f6fcaa;">BOOK YOUR SERVICE</h1>
+        </section>
+        <hr style="background-color: #616005; height: 2px;">
+    
+        <div class="row" style="justify-content: center; display: flex; align-items: center; width: 100%;">
+            <div class="col-md-6">
+    
+    <form action="/booking/create/<%= services._id %>/" method="POST" class="needs-validation " novalidate>
+        <input type="text" name="userId" value="<%= User.id %>" hidden>
+        <input type="text" name="serviceId" value="<%= services._id %>" hidden>
+        
+        <!-- Booking ID (Auto-Generated, hidden input) -->
+        <input type="hidden" name="bookingId" value="<%= bookingId %>">
+
+        <!-- Select Service -->
+       
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+            <div class="invalid-feedback">Please provide a description for the service.</div>
+        </div>
+
+        <!-- Select Date -->
+        <div class="mb-3">
+            <label for="date" class="form-label">Select Date</label>
+            <input type="date" class="form-control" name="date" id="date" required>
+            <div class="invalid-feedback">Please select a valid date.</div>
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" name="address" id="address" placeholder="Enter your address" required>
+            <div class="invalid-feedback">Please provide a valid address.</div>
+        </div>
+
+        <!-- Booking Status (Optional: If Admin wants to assign status) -->
+        <div class="mb-3" >
+            <label for="status" class="form-label" hidden>Booking Status</label>
+            <select class="form-select" name="status" id="status" hidden>
+                <option value="pending">Pending</option>
+                <option value="onprogress">On Progress</option>
+                <option value="completed">Completed</option>
+                <option value="cancel">Cancel</option>
+            </select>
+            <div class="invalid-feedback">Please select a booking status.</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit Booking</button>
+    </form>
+            </div>
+           
+            <div class="col-md-6 mb-4">
+                <% if (services) { %>
+                <div class="card" style="width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <img src="/<%= services.productImage %>" class="card-img-top" alt="<%= services.name %>" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Title:</strong><%= services.name %></h5>
+                        <p class="card-text">
+                            <strong>Price:</strong> $<%= services.price %><br>
+                            <strong>Travelers:</strong> <%= services.travelers %><br>
+                            <strong>Duration:</strong> <%= services.duration %> Days<br>
+                            <strong>Contact:</strong> <%= services.contactNumber %><br>
+                            <strong>Destination:</strong> <%= services.categoryId.name %>
+                        </p>
+                       <% } %>
+                    </div>
+                </div>
+    </div>
+    </div>
+</div>
+
+
+<script>
+    // Bootstrap form validation
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })();
+</script>
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('serviceDropdown');
+        dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'block' : 'none';
+    }
+
+    function selectService(id, name, price) {
+        document.getElementById('selectedService').textContent = name;
+        document.getElementById('serviceId').value = id; 
+        document.getElementById('price').textContent = price;
+        toggleDropdown(); 
+    }
+
+    // Close the dropdown if clicked outside
+    window.onclick = function(event) {
+        if (!event.target.matches('#selectedService')) {
+            const dropdown = document.getElementById('serviceDropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            }
+        }
+    }
+</script>

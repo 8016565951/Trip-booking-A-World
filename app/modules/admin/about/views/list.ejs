@@ -1,0 +1,32 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Update About</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <form action="<%= generateDashUrl('about.single.update.http') %>" method="post" enctype="multipart/form-data">
+                <div>
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" value="<%= about ? about.title : '' %>" class="form-control" required>
+                </div>
+                
+                <div>
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" class="form-control" required><%= about ? about.description : '' %></textarea>
+                </div>
+                
+                <div>
+                    <label for="aboutimage" class="form-label">About Image</label>
+                    <input type="file" name="aboutimage"  class="form-control">
+                    <% if (about && about.aboutimage) { %>
+                        <img src="/<%= about.aboutimage %>" alt="About Image" style="width:100px;" class="mt-3">
+                    <% } %>
+                </div>
+            
+                <button type="submit">Update</button>
+            </form>
+            
+        </div>
+    </div>
+</div>

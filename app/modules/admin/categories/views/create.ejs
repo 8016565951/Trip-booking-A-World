@@ -1,0 +1,31 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Create Designation</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <form
+                action="<%= generateDashUrl('category.single.create.http') %>"
+                method="POST"
+            >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

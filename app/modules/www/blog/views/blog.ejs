@@ -1,0 +1,108 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+<div class="banner_section " >
+   
+
+    <div class="container my-5">
+        <section style="height: 100px; text-align: center; background-color: #1c1c1e; color: #fafafa; margin-top: 50px;">
+            <h1 style="color: #f6fcaa;">BLOG DETAILS</h1>
+        </section>
+        <hr style="background-color: #616005; height: 2px;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card mb-5" style="border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                    <!-- Blog Image -->
+                    <img src="/<%= blog.blogImage %>" class="card-img-top" alt="<%= blog.title %>" style="border-top-left-radius: 10px; border-top-right-radius: 10px; height: 400px; object-fit: cover;" />
+                    
+                    <!-- Blog Content -->
+                    <div class="card-body" style="padding: 30px;">
+                        <h1 class="card-title" style="font-size: 2rem; font-weight: 600; margin-bottom: 20px;"><%= blog.title %></h1>
+                        <p class="card-text" style="font-size: 1.1rem; color: #333; line-height: 1.6;"><%= blog.content %></p>
+                        
+                        <!-- Like button and Blog Metadata -->
+                        <!-- <div class="d-flex justify-content-between align-items-center mt-4">
+                            <button class="btn btn-light" onclick="likeBlog('<%= blog._id %>')" style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                                <i class="fas fa-heart" style="color: #ff4d4f;"></i> Like (<%= blog.likes %>)
+                            </button>
+                            <span class="text-muted" style="font-size: 0.9rem;">
+                                Created by <%= blog.createdBy ? blog.createdBy.name : 'Unknown' %> on <%= new Date(blog.createdAt).toLocaleDateString() %>
+                            </span>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Comments section -->
+                <div class="comments-section mt-5">
+                    <h3 style="font-size: 1.5rem; font-weight: 500; margin-bottom: 20px;">Comments</h3>
+                    
+                    <% if (comments && comments.length > 0) { %>
+                        <ul class="list-unstyled">
+                            <% comments.forEach(comment => { %>
+                                <li class="media mb-4" style="padding: 20px; background-color: #f9f9f9; border-radius: 10px;">
+                                    <% if (comment.userDetails) { %>
+                                        <img src="/<%= comment.userDetails.avatarUrl || '/path/to/default-avatar.jpg' %>" class="mr-3" alt="User Avatar" style="width: 50px; height: 50px; border-radius: 50%;" />
+                                        <div class="media-body">
+                                            <h5 class="mt-0 mb-1" style="font-size: 1rem; font-weight: 500;"><%= comment.userDetails.username || 'Anonymous' %></h5>
+                                            <p style="font-size: 1rem; color: #333;"><%= comment.content %></p>
+                                            <small class="text-muted" style="font-size: 0.8rem;"><%= new Date(comment.createdAt).toLocaleDateString() %></small>
+                                            <button class="btn btn-link mt-2" onclick="toggleReplies('<%= comment._id %>')" style="font-size: 0.8rem; color: #fffb00; text-decoration: none; background-color: black;">Reply</button>
+                                            
+                                            <!-- Replies Section -->
+                                            <div id="replies-<%= comment._id %>" class="replies" style="display: none; margin-top: 10px;">
+                                                <ul class="list-unstyled">
+                                                    <% if (comment.replies && comment.replies.length > 0) { %>
+                                                        <% comment.replies.forEach(reply => { %>
+                                                            <li class="media mb-2" style="padding: 10px; background-color: #f0f0f0; border-radius: 8px;">
+                                                                 
+                                                                 <p><img src="/<%= reply.username ? reply.username.avatarUrl : '/path/to/default-avatar.jpg' %>" style="width: 30px; height: 30px; border-radius: 50%;" alt=""></p>
+                                                                <strong style="font-size: 1rem; color: #333;"><%= reply.username ? reply.username.username : 'Anonymous' %> :</strong>
+                                                                <p style="font-size: 1rem; color: #333;"><%= reply.content %></p>
+                                                                <small class="text-muted" style="font-size: 0.8rem;"><%= new Date(reply.createdAt).toLocaleDateString() %></small>
+                                                            </li>
+                                                        <% }) %>
+                                                    <% } else { %>
+                                                        <p>No replies yet.</p>
+                                                    <% } %>
+                                                </ul>
+                                                <form action="/blog/<%= comment._id %>/reply/<%= blog._id %>" method="POST">
+                                                    <div class="form-group">
+                                                        <textarea name="content" class="form-control" required placeholder="Write a reply..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary" style="margin-top: 10px; background-color: #1c1c1e;">Submit Reply</button>
+                                                </form>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    <% } else { %>
+                                        <p>No user information available for this comment.</p>
+                                    <% } %>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } else { %>
+                        <p style="font-size: 1rem;">No comments yet.</p>
+                    <% } %>
+                    
+                    <!-- Comment Form -->
+                    <form id="commentForm" method="post" action="/comments/<%=blog._id%>">
+                        <div class="form-group">
+                            <label for="comment">Your Comment:</label>
+                            <input name="content" class="form-control" type="text" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Comment</button>
+                    </form>
+                </div>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleReplies(commentId) {
+        const repliesContainer = document.getElementById(`replies-${commentId}`);
+        repliesContainer.style.display = (repliesContainer.style.display === "none") ? "block" : "none";
+    }
+</script>

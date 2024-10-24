@@ -1,0 +1,71 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+<div class="banner_section">
+    <div class="container mt-5">
+        <section style="height: 100px; text-align: center; background-color: #1c1c1e; color: #fafafa; margin-top: 50px;">
+            <h1 style="color: #f6fcaa;">BLOGS</h1>
+        </section>
+        <hr style="background-color: #616005; height: 2px;">
+
+        <div class="container" style="width: 90%; margin: 0 auto; padding-top: 90px;">
+            <div class="row" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                <!-- Loop through each blog item -->
+                <% blogs.forEach(blog => { %>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <!-- Image section -->
+                            <img src="/<%= blog.blogImage %>" alt="<%= blog.title %>" class="card-img-top" style="height: 300px; object-fit: cover;">
+                            
+                            <!-- Content section -->
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 1.2em;"><%= blog.title %></h5>
+                                <p id="preview-<%= blog._id %>" class="card-text" style="font-size: 0.9em; color: #333;">
+                                    <%= blog.content.substring(0, 100) %>...
+                                </p>
+                                <p id="full-<%= blog._id %>" class="d-none" style="font-size: 0.9em; color: #333;">
+                                    <%= blog.content %>
+                                </p>
+                                <a href="<%= generateUrl('www.blog.single.ui', { id: blog._id }) %>" 
+                                   class="btn btn-primary" 
+                                   onclick="toggleContent('<%= blog._id %>')">Read More</a>
+                            </div>
+                            
+                            <!-- Footer: Author and Date -->
+                            <div class="card-footer text-muted">
+                                Created by <%= blog.createdBy ? blog.createdBy.name : 'A-World' %> on <%= new Date(blog.createdAt).toLocaleDateString() %>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleContent(blogId) {
+        const preview = document.getElementById(`preview-${blogId}`);
+        const fullContent = document.getElementById(`full-${blogId}`);
+        const button = event.target;
+
+        if (fullContent.style.display === 'none') {
+            preview.style.display = 'none';
+            fullContent.style.display = 'block';
+            button.textContent = 'Read Less';
+        } else {
+            preview.style.display = 'block';
+            fullContent.style.display = 'none';
+            button.textContent = 'Read More';
+        }
+    }
+
+    function likeBlog(blogId) {
+        fetch(`/blogs/${blogId}/like`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.likes !== undefined) {
+                    const button = document.querySelector(`button[onclick="likeBlog('${blogId}')"] i`);
+                    button.nextSibling.nodeValue = ` (${data.likes})`;
+                }
+            });
+    }
+</script>

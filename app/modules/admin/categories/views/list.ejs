@@ -1,0 +1,38 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Designations</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% categories.forEach(category => { %>
+                        <tr>
+                            <th scope="row"><%= category.id %></th>
+                            <td><%= category.name %></td>
+                            <td><%= new Date(category.createdAt).toDateString() %></td>
+                            
+                            <td>
+                                <a href="<%= generateDashUrl('category.single.update.ui', { id: category.id }) %>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="<%= generateDashUrl('category.single.delete.http', { id: category.id }) %>" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

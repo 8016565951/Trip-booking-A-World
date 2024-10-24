@@ -1,0 +1,32 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Edit Designation</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <form
+                action="<%= generateDashUrl('category.single.update.http', { id: category.id }) %>"
+                method="POST"
+            >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        value="<%= category.name %>"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

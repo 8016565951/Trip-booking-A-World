@@ -1,0 +1,45 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+<div class="card p-4 shadow-sm">
+    <h1 class="card-title text-center">Verify Your Email</h1>
+    <p class="text-muted text-center">
+        Please click the button to verify your email.
+    </p>
+    <form id="verify-email-form" class="text-center" method="post">
+        <input type="hidden" name="token" id="token" />
+        <button type="submit" class="btn btn-primary mt-3">Verify Email</button>
+    </form>
+</div>
+
+<script>
+    // Extract token from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    // Check if the token is present
+    if (!token) {
+        alert("Token is missing from the URL");
+        window.location.href = "/auth/signin"; // Redirect if token is missing
+    } else {
+        // Set the token as a hidden input value
+        document.getElementById("token").value = token;
+    }
+
+    // Optional: handle form submission using AJAX
+    document
+        .getElementById("verify-email-form")
+        .addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const tokenValue = document.getElementById("token").value;
+            console.log("Token being sent:", tokenValue); // Add this line
+
+            // Send the verification request
+            fetch("/auth/verify?token=" + tokenValue, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ token: tokenValue }),
+            });
+        });
+</script>

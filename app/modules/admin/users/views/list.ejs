@@ -1,0 +1,38 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Users</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Verification</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <th scope="row"><%= user.id %></th>
+                            <td><%= user.username %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.isVerified ? 'Verified' : 'Not Verified' %></td>
+                            <td>
+                                <a href="<%= generateDashUrl('users.single.delete.http', { id: user.id }) %>" class="btn btn-danger btn-sm <%= userId === user.id ? 'disabled' : '' %>">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

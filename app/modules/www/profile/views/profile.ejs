@@ -1,0 +1,74 @@
+<!-- views/profile.ejs -->
+
+<% layout(dirs.layouts + '/uiLayout') -%>
+<div class="banner_section" >
+   
+   
+
+    <div class="container my-5">
+        <section style="height: 100px; text-align: center; background-color: #1c1c1e; color: #fafafa; margin-top: 50px;">
+            <h1 style="color: #f6fcaa;">MY PROFILE</h1>
+        </section>
+        <hr style="background-color: #616005; height: 2px;">
+        <!-- Profile Information -->
+     <form action="<%= generateUrl('www.profile.update.http') %>"       method="POST" enctype="multipart/form-data">
+        <div class="row">
+        <div class="col-md-3">
+            <% if (User.avatarUrl  !== "uploads\\images\\avatars\\item_1727088695770.jpg") { %>
+            <img
+            src="/<%= User.avatarUrl %>"
+            alt="preventDefault"
+            class="img-fluid rounded-circle"
+            style="width: 200px; height: 200px"
+        />
+            <% } else { %>
+            <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            alt="Default"
+            class="img-fluid rounded-circle"
+            style="width: 200px; height: 200px"
+        />
+            <% } %>
+        </div>
+        <div class="col-md-6">
+           
+            <div class="row">
+                <label for="avatarUrl">Avatar URL</label>
+                <input type="file" class="form-control" name="avatarUrl" value="/<%= User.avatarUrl %>" required />
+            </div>
+
+            <div class="row">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    value="<%= User.username %>"
+                    required
+                />
+            </div>
+
+            <div class="row">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    value="<%= User.email %>"
+                    required
+                />
+            </div>
+        </div>
+        </div>
+  
+
+        <!-- Form to update profile information -->
+
+        <button type="submit" class="btn btn-primary mt-3 text-center" style="width: 100%;">
+            Update Profile
+        </button>
+    </form>
+    
+</div>

@@ -1,0 +1,65 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+<div class="banner_section " >
+   
+    <div class="container mt-5">
+        <section style="height: 100px; text-align: center; background-color: #1c1c1e; color: #fafafa; margin-top: 50px;">
+            <h1 style="color: #f6fcaa">BOOKING DETAILS</h1>
+        </section>
+        <hr style="background-color: #616005; height: 2px" />
+    
+        <!-- Booking Information -->
+        <div class="card mb-4">
+            <div class="card-header">Booking ID: <%= booking.bookingId %></div>
+            <div class="card-body">
+                <h5 class="card-title">Service: <%= booking.serviceId?.name || 'N/A' %></h5>
+                <p class="card-text">Destination: <%= booking.serviceId?.categoryId?.name || 'N/A' %></p>
+                <p class="card-text">Price: $<%= booking.serviceId?.price || 'N/A' %></p>
+                <p class="card-text">Travelers: <%= booking.serviceId?.travelers || 'N/A' %></p>
+                <p class="card-text">Duration: <%= booking.serviceId?.duration || 'N/A' %> Days</p>
+                <p class="card-text">Description: <%= booking.description || 'N/A' %></p>
+                <p class="card-text">Date: <%= booking.date ? booking.date.toDateString() : 'N/A' %></p>
+                <p class="card-text">Address: <%= booking.address || 'N/A' %></p>
+                <p class="card-text">Status:
+                    <span class="badge 
+                        <% if (booking.status === 'pending') { %> badge-warning 
+                        <% } else if (booking.status === 'onprogress') { %> badge-info 
+                        <% } else if (booking.status === 'completed') { %> badge-success 
+                        <% } else if (booking.status === 'cancel') { %> badge-danger 
+                        <% } %>">
+                        <%= booking.status || 'N/A' %>
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <!-- User Information -->
+        <div class="card mb-4">
+            <div class="card-header">User Information</div>
+            <div class="card-body">
+                <p class="card-text"><strong>Name:</strong> <%= booking.userId?.username || 'N/A' %></p>
+                <p class="card-text"><strong>Email:</strong> <%= booking.userId?.email || 'N/A' %></p>
+            </div>
+        </div>
+
+        <!-- Service Details -->
+        <div class="card mb-4">
+            <div class="card-header">Service Information</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="/<%= booking.serviceId?.productImage || '/images/default-image.png' %>" 
+                             alt="<%= booking.serviceId?.name || 'Default Image' %>"
+                             class="img-fluid" style="max-height: 200px; object-fit: cover" />
+                    </div>
+                    <div class="col-md-8">
+                        <h5>Title: <%= booking.serviceId?.name || 'N/A' %></h5>
+                        <h5>Destination: <%= booking.serviceId?.categoryId?.name || 'N/A' %></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <a href="<%= generateUrl('www.booking.ui.list') %>" class="btn btn-secondary">Back to Bookings</a>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Blogs <hr style="background-color: rgb(221, 255, 0);"></h1>
+    <div class="container">
+       
+        <div class="row">
+            
+            <% blogs.forEach(blog => { %>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="/<%= blog.blogImage %>" class="card-img" alt="">
+                        <div class="card-body">
+                            <h2 class="card-title"><b><%= blog.title %></b></h2>
+                            
+                            <p class="card-text"><%= blog.content.substring(0, 100) %>...</p>
+                            <p class="card-text">
+                                <small class="text-muted">By <%= blog.likes %> Likes</small>
+                            </p>
+                           <div class="card-footer">
+                            <a href="<%= generateDashUrl('blog.single.view.ui', { id: blog._id }) %>" class="btn btn-primary">Read More</a>
+                            <a href="/dashboard/blog/<%= blog._id %>/delete" class="btn btn-primary">Delete</a> 
+
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+            <% if (blogs && blogs.length === 0) { %>
+                <div class="col-md-12" >
+                    <div class="card mb-4">
+                        <div class="card-body" style=" background-color: aquamarine; border-radius: 5px; color: black; ">
+                            <h2 class="card-title text-center">No Blogs Found</h2>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+        </div>
+       
+       
+    </div>
+</div>

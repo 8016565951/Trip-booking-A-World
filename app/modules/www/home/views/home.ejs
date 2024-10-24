@@ -1,0 +1,409 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+
+<div class="banner_section " >
+    <!-- Banner Section Start -->
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <% banners.forEach((banner, index) => { %>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="<%= index %>" 
+                        class="<%= index === 0 ? 'active' : '' %>" 
+                        aria-current="<%= index === 0 ? 'true' : 'false' %>" 
+                        aria-label="Slide <%= index + 1 %>"></button>
+            <% }) %>
+        </div>
+        
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+            <% if (banners.length > 0) { %>
+                <% banners.forEach((banner, index) => { %>
+                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>" data-bs-interval="5000">
+                        <!-- Banner Image -->
+                        <img src="/<%= banner.bannerimage %>" class=" w-100" alt="<%= banner.title %>" 
+                             id="banner-image-<%= index %>" 
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                        
+                        <!-- Banner Text -->
+                        <div class="carousel-caption d-none d-md-block text-center" style="background-color: #0000006c; border-radius: 20px;" id="caption-<%= index %>" 
+                             style="position: absolute; bottom: 20%; left: 0; right: 0; text-align: center;">
+                            <h1 id="title-<%= index %>" style="margin: 0; font-size: 4rem; color: inherit;"><%= banner.title %></h1>
+                            <div class="container">
+                            <p class="text-center" style="margin: 0; font-size: 1.2rem; color: inherit;"><%= banner.description %></p>
+                        </div>
+                            <div class="read_bt" style="margin-top: 10px;">
+                                <a href="#" style="display: inline-block; padding: 10px 20px; background-color: #000000; color: rgb(251, 255, 0); text-decoration: none; border-radius: 50px; transition: background-color 0.3s;">Get A Quote</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No banners available</p>
+            <% } %>
+        </div>
+        
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev" style="background-color: rgba(0, 0, 0, 0);">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next" style="background-color: rgba(0, 0, 0, 0);">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+
+<!-- banner section end -->
+<!-- services section start -->
+<div class="container-fluid " style="background-color: rgba(255, 255, 255, 0.104);">
+    <div class="container">
+        <div style="height: 150px;">
+
+        </div>
+        <div style="position: relative; overflow: hidden; border-radius: 150px; padding: 30px;">
+            <!-- Background video -->
+            <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+              <source src="/video/ROYALTY FREE Travel Pop Music _ Travel Video Background Royalty Free Music by MUSIC4VIDEO.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          
+            <!-- Content on top of the video -->
+            <div style="position: relative; color: #ced4da; z-index: 1; shape-image-threshold: initial; ">
+              <h1 class="text-center" style="color: #ffffff;">
+                Services
+                <hr style="background-color: solid #ffffff; height: 3px;">
+              </h1>
+              <p class="text-center">
+                There are many variations of passages of Lorem Ipsum available, but
+                the majority have suffered alteration
+              </p>
+            </div>
+          
+          
+            
+                <div class="filter_form" style="background-color: rgba(255, 255, 255, 0); display: flex; align-items: center; justify-content: center; ">
+                    
+                    <form action="<%= generateUrl('www.searchProductsByCategory') %>" method="GET" style=" display: flex; align-items: center; gap: 10px;">
+                        <select name="category" style="
+                            flex: 1;
+                            
+                            padding: 10px 20PX;
+                            border: 1px solid #ced4da;
+                            border-radius: 50px;
+                            box-shadow: 0 2px 4px rgba(52, 52, 52, 0.281);
+                            font-size: 16px;
+                            outline: none;
+                            transition: border-color 0.2s ease-in-out;
+                        ">
+                            <option value="">-- Select Destination --</option>
+                            <% categories.forEach(category => { %>
+                                <option value="<%= category._id %>"><%= category.name %></option>
+                            <% }) %>
+                        </select>
+                        <button type="submit" style="
+                            padding: 10px 20px;
+                            border: none;
+                            border-radius: 50px;
+                            background-color: #007bff;
+                            color: white;
+                            font-size: 16px;
+                            cursor: pointer;
+                            transition: background-color 0.2s ease-in-out;
+                        ">
+                            Search
+                        </button>
+                    </form>
+                </div>
+        </div>
+        <div class="services_section_2">
+            
+        
+            <div class="row">
+                 <% if (products.docs.length > 0) { %>
+                <div class="row">
+                    <% products.docs.forEach(product => { %>
+                        <% if (product.isActive === true) { %>
+                        <div class="col-md-4 mb-4">
+                            <div class="card" style="width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                <img src="/<%= product.productImage %>" class="card-img-top" alt="<%= product.name %>" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.name %></h5>
+                                    <p class="card-text">
+                                        <strong>Price:</strong> $<%= product.price %><br>
+                                        <strong>Travelers:</strong> <%= product.travelers %><br>
+                                        <strong>Duration:</strong> <%= product.duration %> Days<br>
+                                        <strong>Contact:</strong> <%= product.contactNumber %><br>
+                                        <strong>Destination:</strong> <%= product.category.name %>
+                                    </p>
+                                    <% if (User) { %>
+                                    <a href="/booking/<%= product.id %>" class="btn btn-secondary">Book Now</a>
+                                    <% }else{ %>
+                                    <a href="<%= generateUrl('auth.signin.ui') %>" class="btn btn-secondary">Book Now</a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="text-center" style="background-color: rgb(191, 255, 0); padding: 10px; border-radius: 50px; color: rgb(0, 0, 0);">No Services found </p>
+            <% } %>
+
+            <!-- Pagination -->
+            <div class="pagination mt-4">
+                <% if (products.hasPrevPage) { %>
+                    <a href="?page=<%= products.prevPage %>" class="btn btn-outline-primary">Previous</a>
+                <% } %>
+
+                <% if (products.hasNextPage) { %>
+                    <a href="?page=<%= products.nextPage %>" class="btn btn-outline-primary">Next</a>
+                <% } %>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- services section end -->
+<!-- about section start -->
+<% if (about) { %>
+    <div class="about_section ">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="about_taital_main">
+                        <h1 class="about_taital"><%= about.title %></h1>
+                        <p class="about_text">
+                            <!-- Truncate the description to 150 characters -->
+                            <%= about.description.length > 150 
+                                ? about.description.substring(0, 150) + '...' 
+                                : about.description 
+                            %>
+                        </p>
+                        <!-- Show Read More button if description exceeds 150 characters -->
+                        <% if (about.description.length > 150) { %>
+                            <div class="readmore_bt">
+                                <a href="<%= generateUrl('www.about.ui') %>">Read More</a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div>
+                        <img src="/<%= about.aboutimage %>"  style="border-radius: 10px; height: fit-content;"  />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } else { %>
+        <p>No About available</p>
+    <% } %>
+    
+    
+<!-- about section end -->
+
+<!-- blog section start -->
+<!-- video -->
+
+
+<div class="blog_section" style="position: relative; overflow: hidden;">
+   <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 1000px; object-fit: cover; z-index: -1;">
+        <source src="/video/Incredible India 4k - The Real India Revealed in 14 Minutes.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>   
+</div>
+   
+
+
+<!-- blog section end -->
+<!-- client section start -->
+<div class="client_section">
+    <div class="container">
+        <h1 class="client_taital">BLOGS</h1>
+        <div class="client_section_2">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <% if(blogs && blogs.length > 0) { %>
+                <ol class="carousel-indicators">
+                    <% blogs.forEach((blog, index) => { %>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>"></li>
+                    <% }) %>
+                </ol>
+
+                <div class="carousel-inner">
+                    <% blogs.forEach((blog, index) => { %>
+                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                        <div class="client_main">
+                            <div class="box_left">
+                               
+                                <div class="lorem_text">
+                                    <h3 class="text-center">
+                                        <%= blog.title %>
+                                    </h3>
+                                    
+                                   <p> <%= blog.content %></p> <!-- Assuming `blog.content` holds the testimonial text -->
+                                </div>
+                                <div class="row" >
+                                    <div  style="background-color: rgb(0, 0, 0); height: 40px; width: 40px; margin-top: 40px; border-radius: 30px;">
+                                        <div  style="background-color: rgb(1, 234, 255); height: 30px; width: 30px;margin-top: 5px;  border-radius: 20px;">
+                                           
+                                        </div>
+                                    </div>
+                                    
+                                    <div  style="background-color: black; height: 20px; width: 60%; margin-top: 50px; border-radius: 20px;">
+                                       <div class="row">
+                                         <div  style="background-color: rgb(190, 171, 27); height: 15px; width: 80%; border-radius: 20px;">
+                                            
+                                       </div>
+                                       <div  style="background-color: rgb(27, 182, 190); height: 15px; width: 20%; border-radius: 20px;">
+    
+                                       </div>
+                                    </div>
+    
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="box_right">
+                                <div>
+                                   
+                                    <div  style="width: 100%; height: 100%; overflow: hidden;">
+                                        <img src="/<%= blog.blogImage || 'images/client-img.png' %>" alt="Client Image" 
+                                            style="width: 100%; height: 300px; object-fit: cover; display: block; border-radius: 20px; border: 1px solid black;" />
+                                    </div>
+                                   
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>                    
+                </div>
+
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+                <% } else { %>
+                    <p>No testimonials available.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-5">
+    <h2 class="text-center mb-4 client_taital">Testimonials</h2>
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="text-center">
+                    <img src="/images/client-img.png" class="rounded-circle mb-3" alt="User 1" width="100" style="border: 2px solid #007bff;">
+                    <h5 style="font-weight: bold;">John Doe</h5>
+                    <p class="text-muted" style="font-style: italic; color: #555;">"My trip to India was unforgettable! The culture, the food, and the people were incredible. I can't wait to go back!"</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="text-center">
+                    <img src="/images/client-img1.png" class="rounded-circle mb-3" alt="User 2" width="100" style="border: 2px solid #007bff;">
+                    <h5 style="font-weight: bold;">Jane Smith</h5>
+                    <p class="text-muted" style="font-style: italic; color: #555;">"The travel service was outstanding! Everything was organized perfectly, and I felt like a VIP throughout my journey."</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="text-center">
+                    <img src="/images/client-img1.png" class="rounded-circle mb-3" alt="User 3" width="100" style="border: 2px solid #007bff;">
+                    <h5 style="font-weight: bold;">Mike Johnson</h5>
+                    <p class="text-muted" style="font-style: italic; color: #555;">"From the mountains to the beaches, India offers such diverse experiences. I loved every moment of my trip!"</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<!-- client section start -->
+<!-- choose section start -->
+<div class="choose_section ">
+    <div class="container">
+        <h1 class="choose_taital">Why Choose Us</h1>
+        <p class="choose_text">
+            There are many variations of passages of Lorem Ipsum available, but
+            the majority have suffered alteration in some form, by injected
+            humour, or randomised words which don't look even slightly
+            believable. If you are going to use a passage of Lorem Ipsum, you
+            need to be sure there isn't anything embarrassing hidden in the
+            middle of text. All
+        </p>
+        <div class="read_bt_1"><a href="#">Read More</a></div>
+        <div class="newsletter_box" >
+            <h1 class="let_text">Let Start Talk with Us</h1>
+            <div class="getquote_bt"><a href="/contact">Get A CallBack</a></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- choose section end -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const banners = document.querySelectorAll('[id^="banner-image-"]');
+    
+        banners.forEach((image, index) => {
+            image.addEventListener('load', function() {
+                setTextColor(image, index);
+            });
+            
+            // Handle cached images
+            if (image.complete) {
+                setTextColor(image, index);
+            }
+        });
+    
+        function setTextColor(image, index) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = image.naturalWidth;
+            canvas.height = image.naturalHeight;
+    
+            context.drawImage(image, 0, 0);
+            const data = context.getImageData(0, 0, canvas.width, canvas.height);
+            let r = 0, g = 0, b = 0;
+    
+            for (let i = 0; i < data.data.length; i += 4) {
+                r += data.data[i];
+                g += data.data[i + 1];
+                b += data.data[i + 2];
+            }
+    
+            r = Math.floor(r / (data.data.length / 4));
+            g = Math.floor(g / (data.data.length / 4));
+            b = Math.floor(b / (data.data.length / 4));
+    
+            const brightness = (r * 0.299 + g * 0.587 + b * 0.114);
+            const textColor = (brightness > 128) ? '#fff' : '#fff'; // Dark text for light backgrounds, light text for dark backgrounds
+    
+            // Set the text color for both title and description
+            const caption = document.getElementById(`caption-${index}`);
+            const title = document.getElementById(`title-${index}`);
+    
+            caption.style.color = textColor; // For description text
+            title.style.color = textColor; // For title text
+        }
+    });
+    </script>
+    
+    

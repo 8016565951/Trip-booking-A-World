@@ -1,0 +1,73 @@
+
+
+
+<% layout(dirs.layouts + '/uiLayout') -%>
+
+<div class="container" >
+    
+
+   <div class="container">
+     
+      
+      <div class="services_section_2">
+        <section
+        style="
+            height: 100px;
+            text-align: center;
+            background-color: #1c1c1e;
+            color: #fafafa;
+            margin-top: 50px;
+        "
+    >
+        <h1 style="color: #f6fcaa">DESTINATION: <%= category.name %></h1>
+    </section>
+    <hr style="background-color: #616005; height: 2px" />
+
+        <div class="container mt-4">
+            
+    
+            <% if (products.length > 0) { %>
+                <div class="row">
+                    <% products.forEach(product => { %>
+
+
+                        <% if (product.isActive === true) { %>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <img src="/<%= product.productImage %>" class="card-img-top" alt="<%= product.name %>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.name %></h5>
+                                    <p class="card-text">
+                                        <strong>Price:</strong> $<%= product.price %>/person<br>
+                                        <strong>Travelers:</strong> <%= product.travelers %><br>
+                                        <strong>Duration:</strong> <%= product.duration %> Days<br>
+                                        <strong>Contact:</strong> <%= product.contactNumber %><br>
+                                        <strong>Destination:</strong> <%= product.category.name %>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <% if (User) { %>
+                                        <a href="/booking/<%= product._id %>" class="btn btn-secondary">Book Now</a>
+                                        <% }else{ %>
+                                        <a href="<%= generateUrl('auth.signin.ui') %>" class="btn btn-secondary">Book Now</a>
+                                        <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <% } %>
+
+                       
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="text-center" style="background-color: rgb(191, 255, 0);align-items: center; border-radius: 50px; color: rgb(0, 0, 0);"> No Services found in this Destination.</p>
+            <% } %>
+    
+             <a href="<%= generateUrl('www.service.ui') %>" class="btn btn-primary mt-3">Back to Products</a>
+        </div>
+      </div>
+   </div>
+</div>
+<!-- services section end -->

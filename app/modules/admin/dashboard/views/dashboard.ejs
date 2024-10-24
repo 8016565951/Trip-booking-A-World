@@ -1,0 +1,101 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">
+        STATS
+        <hr style="background-color: rgb(207, 202, 146); height: 2px" />
+    </h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div
+                class="card text-center text-white mb-3"
+                style="background-color: rgb(35, 125, 242)"
+            >
+                <div class="card-body">
+                    <h5 class="text-center">
+                        USERS
+                        <hr style="height:2px; background-color: rgb(195, 192, 161)" />
+                    </h5>
+                    <p class="card-text"><%= stats.users %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div
+                class="card text-center text-white mb-3"
+                style="background-color: rgb(143, 165, 0)"
+            >
+                <div class="card-body">
+                    <h5 class="text-center">
+                        DESTINATION
+                        <hr style="height:2px; background-color: rgb(146, 145, 145)" />
+                    </h5>
+                    <p class="card-text"><%= stats.categories %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div
+                class="card text-center text-white mb-3"
+                style="background-color: rgb(3, 155, 104)"
+            >
+                <div class="card-body text-center">
+                    <h5 class="text-center">
+                        SERVICE
+                        <hr style="height:2px; background-color: rgb(146, 145, 145)" />
+                    </h5>
+                    <p class="card-text"><%= stats.products %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-12">
+        <div
+            class="card text-center text-white mb-3"
+            style="background-color: rgb(4, 132, 8)"
+        >
+            <div class="card-body text-center">
+                <h5 class="text-center">
+                    BOOKINGS
+                    <hr style="height:2px; background-color: rgb(146, 145, 145)" />
+                </h5>
+                <p class="card-text"><%= stats.bookings %></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div
+                class="card text-center text-white mb-3"
+                style="background-color: rgb(68, 4, 132)"
+            >
+                <div class="card-body text-center">
+                    <h5 class="text-center">
+                        BLOGS
+                        <hr style="height:2px; background-color: rgb(146, 145, 145)" />
+                    </h5>
+                    <p class="card-text"><%= stats.blogs %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div
+                class="card text-center text-white mb-3"
+                style="background-color: rgb(132, 4, 98)"
+            >
+                <div class="card-body text-center">
+                    <h5 class="text-center">
+                        CONTACTS
+                        <hr style="height:2px; background-color: rgb(202, 198, 151)
+                        ;" />
+                    </h5>
+                    <p class="card-text"><%= stats.constcts %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" hr style="height:3px; background-color: rgb(146, 145, 145)" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

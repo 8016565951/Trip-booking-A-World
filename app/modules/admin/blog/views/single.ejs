@@ -1,0 +1,101 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <!-- Blog Card -->
+    <h1 class="text-center"><%= blog.title %> <hr style="background-color: rgb(101, 238, 238);"></h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <% if (blog.blogImage) { %>
+           
+            <img src="/<%= blog.blogImage %>" class="card-img-top" alt="Blog Image" style="height: 500px; width: 100%;">
+            <% }else { %>
+            <p>No Image</p>
+            <% } %>
+            
+            <p class="card-text"><%= blog.content %></p>
+            <div class="card-text row justify-content-between"><small class="text-muted"> <div class ="text-muted col">By - username</div>  <div class ="text-muted col">Date: <%= blog.createdAt %></div> <div class ="text-muted col"> Likes: <%= blog.likes %></div></small></%>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+   
+
+    <!-- Comment List -->
+    <ul class="list-group mb-4">
+        <div class="comments-section mt-5">
+            <h3 style="font-size: 1.5rem; font-weight: 500; margin-bottom: 20px;">Comments</h3>
+            
+            <button class="btn btn-primary mb-3" onclick="toggleComments()">Show Comments</button>
+            
+            <% if (comments && comments.length > 0) { %>
+                <ul class="list-unstyled" id="comments-list" style="display: none;">
+                    <% comments.forEach(comment => { %>
+                        <li class="media mb-4" style="padding: 20px; background-color: #103fd8; border-radius: 10px;">
+                            <% if (comment.userDetails) { %>
+                                <img src="/<%= comment.userDetails.avatarUrl || '/path/to/default-avatar.jpg' %>" class="mr-3" alt="User Avatar" style="width: 50px; height: 50px; border-radius: 50%;" />
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1" style="font-size: 1rem; font-weight: 500; color: #333; font-weight: bold;"><%= comment.userDetails.username || 'Anonymous' %></h5>
+                                    <p style="font-size: 1rem; color: #333;"><%= comment.content %></p>
+                                    <small class="text-muted" style="font-size: 0.8rem; color: cadetblue;"><%= new Date(comment.createdAt).toLocaleDateString() %></small>
+                                    <button class="btn btn-link mt-2" onclick="toggleReplies('<%= comment._id %>')" style="font-size: 0.8rem; color: #fffb00; text-decoration: none; background-color: black;">Reply</button>
+                                    
+                                    <!-- Replies Section -->
+                                    <div id="replies-<%= comment._id %>" class="replies" style="display: none; margin-top: 10px;">
+                                        <ul class="list-unstyled">
+                                            <% if (comment.replies && comment.replies.length > 0) { %>
+                                                <% comment.replies.forEach(reply => { %>
+                                                    <li class="media mb-2" style="padding: 10px; background-color: #f0f0f0; border-radius: 8px;">
+                                                        <img src="/<%= reply.userDetails ? reply.userDetails.avatarUrl : '/path/to/default-avatar.jpg' %>" style="width: 30px; height: 30px; border-radius: 50%;" alt="">
+                                                        <strong style="font-size: 1rem; color: #333;"><%= reply.userDetails ? reply.userDetails.username : 'Anonymous' %> :</strong>
+                                                        <p style="font-size: 1rem; color: #333;"><%= reply.content %></p>
+                                                        <small class="text-muted" style="font-size: 0.8rem;"><%= new Date(reply.createdAt).toLocaleDateString() %></small>
+                                                    </li>
+                                                <% }) %>
+                                            <% } else { %>
+                                                <p>No replies yet.</p>
+                                            <% } %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <p>No user information available for this comment.</p>
+                            <% } %>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p style="font-size: 1rem;">No comments yet.</p>
+            <% } %>
+            
+            <!-- Comment Form -->
+        </div>
+    </ul>
+    
+    
+    
+   
+    
+
+</div>
+
+<script>
+    // Function to toggle visibility of comments
+    function toggleComments() {
+        const commentsList = document.getElementById("comments-list");
+        if (commentsList.style.display === 'none' || commentsList.style.display === '') {
+            commentsList.style.display = 'block'; // Show comments
+        } else {
+            commentsList.style.display = 'none'; // Hide comments
+        }
+    }
+
+    // Function to toggle visibility of replies
+    function toggleReplies(commentId) {
+        const repliesElement = document.getElementById(`replies-${commentId}`);
+        if (repliesElement.style.display === 'none' || repliesElement.style.display === '') {
+            repliesElement.style.display = 'block'; // Show replies
+        } else {
+            repliesElement.style.display = 'none'; // Hide replies
+        }
+    }
+</script>

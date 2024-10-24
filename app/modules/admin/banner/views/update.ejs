@@ -1,0 +1,58 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Edit Category</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <form
+                action="<%= generateDashUrl('banner.single.update.http', { id: banner.id }) %>"
+                method="post"
+                enctype="multipart/form-data"
+            >
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        class="form-control"
+                        value="<%= banner.title %>"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-control"
+                        required
+                    >
+<%= banner.description %></textarea
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="bannerimage">Banner Image:</label>
+                    <input
+                        type="file"
+                        id="bannerimage"
+                        name="bannerimage"
+                        class="form-control-file"
+                    />
+                    <p>Current Image: <%= banner.bannerimage %></p>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Update Banner
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>

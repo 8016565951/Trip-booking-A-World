@@ -1,0 +1,110 @@
+<% layout(dirs.layouts + '/uiLayout') -%>
+
+<!-- Services Section Start -->
+<div class="container">
+   
+
+    <div class="container">
+       
+
+        
+
+        <div class="services_section_2">
+            <section
+            style="
+                height: 100px;
+                text-align: center;
+                background-color: #1c1c1e;
+                color: #fafafa;
+             
+            "
+        >
+            <h1 style="color: #f6fcaa">ALL SERVICES</h1>
+        </section>
+            <!-- Category Filter Form -->
+            
+        <hr style="background-color: #616005; height: 2px" />
+            <div class="filter_form" style="background-color: rgb(0, 0, 0); display: flex; align-items: center; justify-content: center; border: 1px solid #ccc; padding: 10px; border-radius:50px; margin-bottom: 20px; backdrop-filter: blur(5px);">
+                <form action="<%= generateUrl('www.searchProductsByCategory') %>" method="GET" style=" display: flex; align-items: center; gap: 10px;">
+                    <select name="category" style="
+                        flex: 1;
+                        
+                        padding: 10px 20px;
+                        border: 1px solid #ced4da;
+                        border-radius: 50px;
+                        box-shadow: 0 2px 4px rgba(52, 52, 52, 0.281);
+                        font-size: 16px;
+                        outline: none;
+                        transition: border-color 0.2s ease-in-out;
+                    ">
+                        <option value="">-- Select Destination --</option>
+                        <% categories.forEach(category => { %>
+                            <option value="<%= category._id %>"><%= category.name %></option>
+                        <% }) %>
+                    </select>
+                    <button type="submit" style="
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 50px;
+                        background-color: #007bff;
+                        color: white;
+                        font-size: 16px;
+                        cursor: pointer;
+                        transition: background-color 0.2s ease-in-out;
+                    ">
+                        Search
+                    </button>
+                </form>
+            </div>
+
+            <!-- Product Cards -->
+            <% if (products.docs.length > 0 ) { %>
+                <div class="row">
+                   
+                    <% products.docs.forEach(product => { %>
+
+                        <% if (product.isActive === true) { %>
+                        
+                        <div class="col-md-4 mb-4">
+
+                            <div class="card" style="width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                <img src="/<%= product.productImage %>" class="card-img-top" alt="<%= product.name %>" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.name %></h5>
+                                    <p class="card-text">
+                                        <strong>Price:</strong> $<%= product.price %><br>
+                                        <strong>Travelers:</strong> <%= product.travelers %><br>
+                                        <strong>Duration:</strong> <%= product.duration %> Days<br>
+                                        <strong>Contact:</strong> <%= product.contactNumber %><br>
+                                        <strong>Destination:</strong> <%= product.category.name %>
+                                    </p>
+                                    <% if (User ) { %>
+                                        <a href="/booking/<%= product._id %>" class="btn btn-secondary">Book Now</a>
+                                        <% }else{ %>
+                                        <a href="<%= generateUrl('auth.signin.ui') %>" class="btn btn-secondary">Book Now</a>
+                                        <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <% } %>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="text-center" style="background-color: rgb(191, 255, 0); padding: 10px; border-radius: 50px; color: rgb(0, 0, 0);">No Services found </p>
+            <% } %>
+
+            <!-- Pagination -->
+            <div class="pagination mt-4">
+                <% if (products.hasPrevPage) { %>
+                    <a href="?page=<%= products.prevPage %>" class="btn btn-outline-primary">Previous</a>
+                <% } %>
+
+                <% if (products.hasNextPage) { %>
+                    <a href="?page=<%= products.nextPage %>" class="btn btn-outline-primary">Next</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Services Section End -->

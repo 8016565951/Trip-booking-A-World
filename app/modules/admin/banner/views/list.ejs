@@ -1,0 +1,45 @@
+<% layout(dirs.layouts + '/layout') -%>
+
+<div class="container mt-5">
+    <h1 class="text-center">Banners</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Banner Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% Banner.forEach(banner => { %>
+                    <tr>
+                        <td><%= banner.title %></td>
+                        <td><%= banner.description %></td>
+                        <td><img src="/<%= banner.bannerimage %>" alt="" style="width: 100px" /></td>
+                        <td>
+                            <a href="<%= generateDashUrl('banner.single.update.ui', { id: banner.id }) %>" class="btn btn-warning">Edit</a>
+                            <form
+                                action=" <%= generateDashUrl('banner.single.delete.http', { id: banner.id }) %>"
+                                method="get"
+                                style="display: inline-block"
+                            >
+                                <button type="submit" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
